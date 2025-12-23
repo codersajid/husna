@@ -1,0 +1,11 @@
+[build]
+  publish = "site"
+  command = ""
+
+[build.processing]
+  skip_processing = true
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

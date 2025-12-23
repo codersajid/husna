@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact / Get a Quote | Husna Engineering & Construction Pvt. Ltd.</title>
+    <meta
+      name="description"
+      content="Contact Husna Engineering & Construction Pvt. Ltd. for a quote or site visit. We respond within 24 hours."
+    />
+    <link rel="canonical" href="contact.html" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brandGreen: '#0B7D3B',
+              brandOrange: '#FF7A18',
+              brandNavy: '#163B5B',
+              brandSlate: '#111827',
+              brandGray: '#F3F4F6'
+            },
+            boxShadow: {
+              soft: '0 10px 25px rgba(0,0,0,0.08)'
+            }
+          }
+        }
+      };
+    </script>
+  </head>
+  <body class="bg-white text-brandSlate antialiased pb-20 md:pb-0">
+    <a class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:shadow-soft" href="#main">Skip to content</a>
+
+    <header class="sticky top-0 z-40 border-b border-black/5 bg-white/80 backdrop-blur">
+      <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
+        <a href="index.html" class="flex items-center gap-3">
+          <img class="h-14 w-auto max-w-[220px]" src="assets/logo.jpeg" alt="Husna Engineering & Construction Pvt. Ltd. logo" />
+          <div class="leading-tight">
+            <div class="text-sm font-semibold tracking-wide text-brandNavy">Husna Engineering</div>
+            <div class="text-xs text-black/60">& Construction Pvt. Ltd.</div>
+          </div>
+        </a>
+
+        <nav class="hidden items-center gap-6 md:flex" aria-label="Primary">
+          <a class="text-sm font-medium text-black/70 hover:text-black" href="about.html">About</a>
+          <a class="text-sm font-medium text-black/70 hover:text-black" href="services.html">Services</a>
+          <a class="text-sm font-medium text-black/70 hover:text-black" href="projects.html">Projects</a>
+          <a class="text-sm font-medium text-black/70 hover:text-black" href="why-us.html">Why Us</a>
+          <a class="text-sm font-medium text-black/70 hover:text-black" href="clients.html">Clients</a>
+          <a class="inline-flex items-center justify-center rounded-md bg-brandOrange px-4 py-2 text-sm font-semibold text-white shadow-soft hover:brightness-95" href="contact.html" aria-current="page">Get a Quote</a>
+        </nav>
+
+        <button
+          type="button"
+          class="inline-flex items-center justify-center rounded-md border border-black/10 bg-white px-3 py-2 text-sm font-semibold text-black/80 hover:bg-brandGray md:hidden"
+          data-mobile-menu-button
+          aria-label="Open menu"
+          aria-expanded="false"
+        >
+          Menu
+        </button>
+      </div>
+
+      <div class="hidden border-t border-black/5 bg-white md:hidden" data-mobile-menu data-open="false">
+        <div class="mx-auto grid max-w-6xl gap-1 px-4 py-3 sm:px-6">
+          <a class="rounded-md px-3 py-2 text-sm font-medium hover:bg-brandGray" href="about.html">About</a>
+          <a class="rounded-md px-3 py-2 text-sm font-medium hover:bg-brandGray" href="services.html">Services</a>
+          <a class="rounded-md px-3 py-2 text-sm font-medium hover:bg-brandGray" href="projects.html">Projects</a>
+          <a class="rounded-md px-3 py-2 text-sm font-medium hover:bg-brandGray" href="why-us.html">Why Us</a>
+          <a class="rounded-md px-3 py-2 text-sm font-medium hover:bg-brandGray" href="clients.html">Clients</a>
+          <a class="mt-2 inline-flex items-center justify-center rounded-md bg-brandOrange px-4 py-2 text-sm font-semibold text-white" href="contact.html" aria-current="page">Get a Quote</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-brandNavy via-brandNavy to-black"></div>
+        <div class="absolute inset-0 opacity-15" style="background-image:url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=2400&q=60'); background-size:cover; background-position:center;"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/20"></div>
+
+        <div class="relative mx-auto max-w-6xl px-4 py-14 sm:px-6">
+          <p class="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs font-semibold tracking-wide text-white/90 ring-1 ring-white/15">Get a Quote</p>
+          <h1 class="mt-5 text-3xl font-semibold text-white">Contact / Get a Quote</h1>
+          <div class="mt-4 h-1.5 w-28 rounded-full bg-gradient-to-r from-brandOrange to-brandGreen"></div>
+          <p class="mt-4 max-w-3xl text-white/80">Share your scope and location. We respond within 24 hours and can schedule a site visit.</p>
+        </div>
+      </section>
+
+      <section class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+        <div class="grid gap-10 lg:grid-cols-12">
+          <div class="lg:col-span-7" data-reveal class="opacity-0 translate-y-3 transition duration-700">
+            <form
+              class="rounded-2xl border border-black/5 border-l-4 border-l-brandGreen bg-white p-7 shadow-soft"
+              name="quote"
+              method="POST"
+              data-netlify="true"
+              netlify-honeypot="website"
+              enctype="multipart/form-data"
+            >
+              <input type="hidden" name="form-name" value="quote" />
+              <label class="hidden">
+                <span>Website</span>
+                <input type="text" name="website" tabindex="-1" autocomplete="off" />
+              </label>
+
+              <div class="grid gap-5 sm:grid-cols-2">
+                <label class="block">
+                  <span class="text-sm font-semibold text-black">Full name</span>
+                  <input
+                    class="mt-2 w-full rounded-md border border-black/10 bg-white px-4 py-3 text-sm outline-none ring-brandOrange/30 focus:ring-4"
+                    type="text"
+                    name="name"
+                    autocomplete="name"
+                    required
+                  />
+                </label>
+
+                <label class="block">
+                  <span class="text-sm font-semibold text-black">Phone</span>
+                  <input
+                    class="mt-2 w-full rounded-md border border-black/10 bg-white px-4 py-3 text-sm outline-none ring-brandOrange/30 focus:ring-4"
+                    type="tel"
+                    name="phone"
+                    autocomplete="tel"
+                    required
+                  />
+                </label>
+
+                <label class="block sm:col-span-2">
+                  <span class="text-sm font-semibold text-black">Email (optional)</span>
+                  <input
+                    class="mt-2 w-full rounded-md border border-black/10 bg-white px-4 py-3 text-sm outline-none ring-brandOrange/30 focus:ring-4"
+                    type="email"
+                    name="email"
+                    autocomplete="email"
+                  />
+                </label>
+
+                <label class="block sm:col-span-2">
+                  <span class="text-sm font-semibold text-black">Project location</span>
+                  <input
+                    class="mt-2 w-full rounded-md border border-black/10 bg-white px-4 py-3 text-sm outline-none ring-brandOrange/30 focus:ring-4"
+                    type="text"
+                    name="location"
+                    placeholder="City, district"
+                    required
+                  />
+                </label>
+
+                <label class="block sm:col-span-2">
+                  <span class="text-sm font-semibold text-black">Service needed</span>
+                  <select
+                    class="mt-2 w-full rounded-md border border-black/10 bg-white px-4 py-3 text-sm outline-none ring-brandOrange/30 focus:ring-4"
+                    name="service"
+                    required
+                  >
+                    <option value="" selected disabled>Select a service</option>
+                    <option>Civil construction</option>
+                    <option>Roads / drainage / culverts</option>
+                    <option>Electrical installation / power distribution</option>
+                    <option>Mechanical / HVAC / plumbing</option>
+                    <option>Fabrication work</option>
+                    <option>Consultation / supervision / project management</option>
+                    <option>Material supply</option>
+                  </select>
+                </label>
+
+                <label class="block sm:col-span-2">
+                  <span class="text-sm font-semibold text-black">Message / scope</span>
+                  <textarea
+                    class="mt-2 min-h-[130px] w-full rounded-md border border-black/10 bg-white px-4 py-3 text-sm outline-none ring-brandOrange/30 focus:ring-4"
+                    name="message"
+                    placeholder="Tell us the work scope, timeline expectations, and any constraints"
+                    required
+                  ></textarea>
+                </label>
+
+                <label class="block sm:col-span-2">
+                  <span class="text-sm font-semibold text-black">Upload drawings/photos (optional)</span>
+                  <input class="mt-2 w-full text-sm" type="file" name="attachment" />
+                </label>
+
+                <label class="flex items-start gap-3 sm:col-span-2">
+                  <input class="mt-1 h-4 w-4 rounded border-black/20" type="checkbox" name="siteVisit" value="yes" />
+                  <span class="text-sm text-black/70">Request a site visit</span>
+                </label>
+              </div>
+
+              <div class="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <p class="text-xs text-black/60">We never share your details. Response within 24 hours.</p>
+                <button class="inline-flex items-center justify-center rounded-md bg-brandOrange px-6 py-3 text-sm font-semibold text-white shadow-soft hover:brightness-95" type="submit">Request a Quote</button>
+              </div>
+            </form>
+          </div>
+
+          <aside class="lg:col-span-5" data-reveal class="opacity-0 translate-y-3 transition duration-700">
+            <div class="rounded-2xl bg-brandNavy p-8 text-white sm:p-10">
+              <h2 class="text-xl font-semibold">Direct contact</h2>
+              <p class="mt-3 text-sm text-white/80">For urgent queries, call or email. We can also schedule a site visit.</p>
+
+              <div class="mt-6 space-y-4 text-sm">
+                <div>
+                  <div class="text-xs font-semibold uppercase tracking-wide text-white/60">Phone</div>
+                  <a class="mt-1 block font-semibold hover:underline" href="tel:+919113311263">+91-9113311263</a>
+                </div>
+                <div>
+                  <div class="text-xs font-semibold uppercase tracking-wide text-white/60">Email</div>
+                  <a class="mt-1 block font-semibold hover:underline" href="mailto:husnaeng&const@outlook.com">husnaeng&const@outlook.com</a>
+                </div>
+                <div>
+                  <div class="text-xs font-semibold uppercase tracking-wide text-white/60">Address</div>
+                  <div class="mt-1 font-semibold">AL-Jamal Campus, Bhuidhra Chock Jail Road, Samastipur, Bihar - 848101</div>
+                </div>
+              </div>
+
+              <div class="mt-8 rounded-xl bg-white/10 p-5 ring-1 ring-white/10">
+                <div class="text-sm font-semibold">What happens next</div>
+                <ol class="mt-3 space-y-2 text-sm text-white/80">
+                  <li>1) We confirm your scope and location</li>
+                  <li>2) We share a clear estimate / BOQ approach</li>
+                  <li>3) We plan execution with safety and quality controls</li>
+                </ol>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-brandSlate text-white">
+      <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+        <div class="grid gap-10 md:grid-cols-4">
+          <div class="md:col-span-2">
+            <div class="flex items-center gap-3">
+              <img class="h-10 w-auto rounded-md bg-white/5 p-1" src="assets/logo.jpeg" alt="Husna Engineering & Construction Pvt. Ltd. logo" />
+              <div>
+                <div class="text-sm font-semibold">Husna Engineering & Construction Pvt. Ltd.</div>
+                <div class="text-xs text-white/70">Building the Nation with Integrity and Amanah</div>
+              </div>
+            </div>
+            <p class="mt-4 text-sm text-white/70 max-w-md">
+              Civil, electrical and mechanical services including consultation, procurement support, quantity surveying and project management.
+            </p>
+          </div>
+
+          <div>
+            <div class="text-sm font-semibold">Company</div>
+            <ul class="mt-3 space-y-2 text-sm text-white/70">
+              <li><a class="hover:text-white" href="about.html">About</a></li>
+              <li><a class="hover:text-white" href="services.html">Services</a></li>
+              <li><a class="hover:text-white" href="projects.html">Projects</a></li>
+              <li><a class="hover:text-white" href="why-us.html">Why Us</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <div class="text-sm font-semibold">Contact</div>
+            <ul class="mt-3 space-y-2 text-sm text-white/70">
+              <li>AL-Jamal Campus, Bhuidhra Chock Jail Road, Samastipur, Bihar - 848101</li>
+              <li><a class="hover:text-white" href="tel:+919113311263">+91-9113311263</a></li>
+              <li><a class="hover:text-white" href="mailto:husnaeng&const@outlook.com">husnaeng&const@outlook.com</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mt-10 flex flex-col gap-2 border-t border-white/10 pt-6 text-xs text-white/60 sm:flex-row sm:items-center sm:justify-between">
+          <div>© <span data-year></span> Husna Engineering & Construction Pvt. Ltd. All rights reserved.</div>
+          <div>Designed for performance, accessibility, and mobile-first experience.</div>
+        </div>
+      </div>
+    </footer>
+
+    <div class="fixed inset-x-0 bottom-0 z-50 border-t border-black/10 bg-white/90 backdrop-blur md:hidden">
+      <div class="mx-auto flex max-w-6xl items-center justify-around px-4 py-3">
+        <a class="grid h-12 w-12 place-items-center rounded-full bg-brandGreen text-white shadow-soft" href="tel:+919113311263" aria-label="Call now">
+          <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12.86.31 1.7.57 2.51a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.57-1.09a2 2 0 0 1 2.11-.45c.81.26 1.65.45 2.51.57A2 2 0 0 1 22 16.92z" />
+          </svg>
+          <span class="sr-only">Call</span>
+        </a>
+
+        <a class="grid h-12 w-12 place-items-center rounded-full bg-white text-[#25D366] shadow-soft ring-1 ring-black/10" href="https://wa.me/919113311263" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+          <svg class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M20.52 3.48A11.8 11.8 0 0 0 12.02 0C5.39 0 .02 5.37.02 12c0 2.11.55 4.17 1.6 6L0 24l6.18-1.62a11.95 11.95 0 0 0 5.84 1.49h.01c6.62 0 11.99-5.37 11.99-12 0-3.2-1.25-6.2-3.5-8.39ZM12.03 21.86h-.01a9.9 9.9 0 0 1-5.05-1.38l-.36-.21-3.67.96.98-3.58-.24-.37a9.85 9.85 0 0 1-1.52-5.25c0-5.45 4.44-9.89 9.9-9.89 2.64 0 5.12 1.03 6.98 2.9a9.82 9.82 0 0 1 2.9 6.99c0 5.46-4.44 9.89-9.9 9.89Zm5.79-7.91c-.31-.16-1.86-.92-2.15-1.02-.29-.11-.5-.16-.72.16-.21.31-.82 1.02-1.01 1.23-.19.21-.37.23-.69.08-.31-.16-1.31-.48-2.5-1.53-.92-.82-1.54-1.83-1.72-2.14-.18-.31-.02-.48.14-.64.14-.14.31-.37.47-.55.16-.19.21-.31.31-.52.1-.21.05-.39-.03-.55-.08-.16-.72-1.73-.99-2.37-.26-.63-.52-.54-.72-.55l-.61-.01c-.21 0-.55.08-.84.39-.29.31-1.1 1.07-1.1 2.61 0 1.54 1.13 3.03 1.28 3.24.16.21 2.22 3.39 5.37 4.76.75.32 1.33.51 1.78.65.75.24 1.43.21 1.97.13.6-.09 1.86-.76 2.12-1.49.26-.73.26-1.36.18-1.49-.08-.13-.29-.21-.6-.37Z" />
+          </svg>
+          <span class="sr-only">WhatsApp</span>
+        </a>
+
+        <a class="grid h-12 w-12 place-items-center rounded-full bg-brandOrange text-white shadow-soft" href="contact.html" aria-label="Get a quote">
+          <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+            <path d="M14 2v6h6" />
+            <path d="M16 13H8" />
+            <path d="M16 17H8" />
+            <path d="M10 9H8" />
+          </svg>
+          <span class="sr-only">Get Quote</span>
+        </a>
+      </div>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>
