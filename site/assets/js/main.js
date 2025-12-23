@@ -32,6 +32,66 @@ if (revealEls.length) {
 const yearEl = document.querySelector('[data-year]');
 if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
+const testimonialSlider = document.querySelector('[data-testimonials-slider]');
+if (testimonialSlider) {
+  const slides = Array.from(testimonialSlider.querySelectorAll('[data-t-slide]'));
+  const dots = Array.from(testimonialSlider.querySelectorAll('[data-t-dot]'));
+  const prevBtn = testimonialSlider.querySelector('[data-t-prev]');
+  const nextBtn = testimonialSlider.querySelector('[data-t-next]');
+  const intervalMs = Number(testimonialSlider.getAttribute('data-interval-ms') || '6500');
+  let idx = 0;
+  let timerId;
+
+  const setActive = (nextIdx) => {
+    if (!slides.length) return;
+    idx = (nextIdx + slides.length) % slides.length;
+
+    slides.forEach((el, i) => {
+      el.classList.toggle('hidden', i !== idx);
+    });
+
+    dots.forEach((el, i) => {
+      el.classList.toggle('bg-brandNavy', i === idx);
+      el.classList.toggle('bg-brandNavy/30', i !== idx);
+    });
+  };
+
+  const stop = () => {
+    if (timerId) window.clearInterval(timerId);
+    timerId = undefined;
+  };
+
+  const start = () => {
+    stop();
+    if (slides.length <= 1) return;
+    timerId = window.setInterval(() => setActive(idx + 1), intervalMs);
+  };
+
+  prevBtn?.addEventListener('click', () => {
+    setActive(idx - 1);
+    start();
+  });
+  nextBtn?.addEventListener('click', () => {
+    setActive(idx + 1);
+    start();
+  });
+
+  dots.forEach((d, i) =>
+    d.addEventListener('click', () => {
+      setActive(i);
+      start();
+    })
+  );
+
+  testimonialSlider.addEventListener('mouseenter', stop);
+  testimonialSlider.addEventListener('mouseleave', start);
+  testimonialSlider.addEventListener('focusin', stop);
+  testimonialSlider.addEventListener('focusout', start);
+
+  setActive(0);
+  start();
+}
+
 const slider = document.querySelector('[data-hero-slider]');
 if (slider) {
   const slides = Array.from(slider.querySelectorAll('[data-slide]'));
