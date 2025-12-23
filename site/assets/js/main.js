@@ -32,6 +32,52 @@ if (revealEls.length) {
 const yearEl = document.querySelector('[data-year]');
 if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
+const lightboxModal = document.querySelector('[data-lightbox-modal]');
+if (lightboxModal) {
+  const imgEl = lightboxModal.querySelector('[data-lightbox-image]');
+  const captionEl = lightboxModal.querySelector('[data-lightbox-caption]');
+  const closeEls = Array.from(lightboxModal.querySelectorAll('[data-lightbox-close]'));
+  const openers = Array.from(document.querySelectorAll('[data-lightbox]'));
+  let lastActiveEl;
+
+  const open = (src, caption) => {
+    if (!imgEl) return;
+    lastActiveEl = document.activeElement;
+    imgEl.src = src;
+    imgEl.alt = caption || 'Gallery image';
+    if (captionEl) captionEl.textContent = caption || '';
+    lightboxModal.classList.remove('hidden');
+    lightboxModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('overflow-hidden');
+  };
+
+  const close = () => {
+    if (!imgEl) return;
+    lightboxModal.classList.add('hidden');
+    lightboxModal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('overflow-hidden');
+    imgEl.src = '';
+    if (captionEl) captionEl.textContent = '';
+    if (lastActiveEl && typeof lastActiveEl.focus === 'function') lastActiveEl.focus();
+    lastActiveEl = undefined;
+  };
+
+  openers.forEach((a) =>
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      const href = a.getAttribute('href') || '';
+      const caption = a.getAttribute('data-caption') || '';
+      open(href, caption);
+    })
+  );
+
+  closeEls.forEach((el) => el.addEventListener('click', close));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightboxModal.getAttribute('aria-hidden') === 'false') close();
+  });
+}
+
 const testimonialSlider = document.querySelector('[data-testimonials-slider]');
 if (testimonialSlider) {
   const slides = Array.from(testimonialSlider.querySelectorAll('[data-t-slide]'));
