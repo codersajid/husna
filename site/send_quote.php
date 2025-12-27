@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-// Update these for your GoDaddy hosting
-$toEmail = 'husnaeng&const@outlook.com';
-$subjectPrefix = 'New Quote/Enquiry Request';
+// IMPORTANT: Update this email to your actual receiving email
+$toEmail = 'husnaengconst@outlook.com';
+$subjectPrefix = 'New Quote Request - Husna Engineering';
 
 function respondHtml(int $statusCode, string $title, string $message): void {
   http_response_code($statusCode);
@@ -60,7 +60,7 @@ $textBody = "New Quote Request\n\n" .
   "IP: {$ip}\n" .
   "User-Agent: {$ua}\n";
 
-$fromEmail = 'husnaeng&const@outlook.com';
+$fromEmail = 'noreply@' . ($_SERVER['HTTP_HOST'] ?? 'husnaengineering.com');
 $headers = [];
 $headers[] = 'From: ' . $fromEmail;
 if ($email !== '') {
