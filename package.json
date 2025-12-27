@@ -1,0 +1,17 @@
+{
+  "name": "azad_web",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "npx tailwindcss -c ./site/tailwind.config.js -i ./site/assets/css/input.css -o ./site/assets/css/tailwind.min.css --minify",
+    "watch:css": "npx tailwindcss -c ./site/tailwind.config.js -i ./site/assets/css/input.css -o ./site/assets/css/tailwind.min.css --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "tailwindcss": "^3.4.1"
+  }
+}

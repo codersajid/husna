@@ -1,6 +1,6 @@
 [build]
   publish = "site"
-  command = ""
+  command = "npm run build:css"
 
 [build.processing]
   skip_processing = true
