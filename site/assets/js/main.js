@@ -32,6 +32,307 @@ if (revealEls.length) {
 const yearEl = document.querySelector('[data-year]');
 if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
+// Client-side routing for smooth navigation
+class SmoothRouter {
+  constructor() {
+    this.currentPage = window.location.pathname;
+    this.init();
+  }
+
+  init() {
+    // Handle navigation clicks
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('a[href]');
+      if (!link) return;
+      
+      const href = link.getAttribute('href');
+      
+      // Skip external links, anchors, and special links
+      if (href.startsWith('http') || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) {
+        return;
+      }
+      
+      // Only handle internal HTML pages
+      if (href.endsWith('.html')) {
+        e.preventDefault();
+        this.navigate(href);
+      }
+    });
+
+    // Handle browser back/forward
+    window.addEventListener('popstate', (e) => {
+      if (e.state && e.state.page) {
+        this.loadPage(e.state.page, false);
+      }
+    });
+  }
+
+  async navigate(page) {
+    // Show loading state
+    this.showLoading();
+    
+    try {
+      await this.loadPage(page, true);
+    } catch (error) {
+      console.error('Navigation failed:', error);
+      // Fallback to regular navigation
+      window.location.href = page;
+    }
+  }
+
+  async loadPage(page, pushState = true) {
+    const response = await fetch(page);
+    if (!response.ok) throw new Error('Page not found');
+    
+    const html = await response.text();
+    
+    // Parse the HTML
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    
+    // Update the page content
+    const newMain = doc.querySelector('main');
+    const currentMain = document.querySelector('main');
+    
+    if (newMain && currentMain) {
+      currentMain.innerHTML = newMain.innerHTML;
+      
+      // Update page title
+      const newTitle = doc.querySelector('title');
+      if (newTitle) {
+        document.title = newTitle.textContent;
+      }
+      
+      // Update active nav state
+      this.updateActiveNav(page);
+      
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      
+      // Re-initialize page-specific functionality
+      this.reinitPage();
+      
+      // Update browser history
+      if (pushState) {
+        history.pushState({ page }, '', page);
+      }
+      
+      this.currentPage = page;
+    }
+    
+    this.hideLoading();
+  }
+
+  updateActiveNav(currentPage) {
+    // Remove active states
+    document.querySelectorAll('nav a').forEach(link => {
+      link.classList.remove('text-brandOrange', 'font-semibold');
+      link.classList.add('text-black/70');
+    });
+    
+    // Add active state to current page
+    const pageName = currentPage.split('/').pop().replace('.html', '');
+    const activeLink = document.querySelector(`nav a[href="${currentPage}"], nav a[href="${pageName}.html"]`);
+    
+    if (activeLink) {
+      activeLink.classList.remove('text-black/70');
+      activeLink.classList.add('text-brandOrange', 'font-semibold');
+    }
+  }
+
+  showLoading() {
+    // Show a subtle loading indicator
+    const loader = document.createElement('div');
+    loader.id = 'nav-loader';
+    loader.className = 'fixed top-0 left-0 right-0 h-1 bg-brandOrange z-50';
+    loader.innerHTML = '<div class="h-full bg-brandOrange animate-pulse"></div>';
+    document.body.appendChild(loader);
+  }
+
+  hideLoading() {
+    const loader = document.getElementById('nav-loader');
+    if (loader) {
+      loader.remove();
+    }
+  }
+
+  reinitPage() {
+    // Re-initialize reveal animations
+    const revealEls = Array.from(document.querySelectorAll('[data-reveal]'));
+    if (revealEls.length) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            entry.target.classList.remove('opacity-0', 'translate-y-3');
+            entry.target.classList.add('opacity-100', 'translate-y-0');
+            observer.unobserve(entry.target);
+          }
+        },
+        { threshold: 0.15 }
+      );
+      for (const el of revealEls) observer.observe(el);
+    }
+
+    // Re-initialize other components
+    initBackToTop();
+    initContactForm();
+    initSliders();
+  }
+}
+
+// Initialize functions for re-use
+function initBackToTop() {
+  const backToTopBtn = document.getElementById('back-to-top');
+  if (backToTopBtn) {
+    const toggleBtn = () => {
+      if (window.scrollY > 300) {
+        backToTopBtn.classList.remove('hidden');
+      } else {
+        backToTopBtn.classList.add('hidden');
+      }
+    };
+
+    window.addEventListener('scroll', toggleBtn);
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    toggleBtn();
+  }
+}
+
+function initContactForm() {
+  const contactForm = document.querySelector('#contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const submitBtn = contactForm.querySelector('button[type="submit"]');
+      const originalText = submitBtn.textContent;
+      
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+      contactForm.classList.add('form-loading');
+      
+      const formData = new FormData(contactForm);
+      const data = Object.fromEntries(formData.entries());
+      
+      try {
+        const response = await fetch('send_quote.php', {
+          method: 'POST',
+          body: formData
+        });
+        
+        if (response.ok) {
+          alert('Thank you for your inquiry! We will contact you soon.');
+          contactForm.reset();
+        } else {
+          throw new Error('Form submission failed');
+        }
+      } catch (error) {
+        alert('There was an error sending your request. Please call us directly at +91-9113311263 or email husnaengconst@outlook.com');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+        contactForm.classList.remove('form-loading');
+      }
+    });
+  }
+}
+
+function initSliders() {
+  // Hero slider
+  const heroSlider = document.querySelector('[data-hero-slider]');
+  if (heroSlider) {
+    const slides = Array.from(heroSlider.querySelectorAll('[data-slide]'));
+    const dots = Array.from(heroSlider.querySelectorAll('[data-dot]'));
+    const prevBtn = heroSlider.querySelector('[data-prev]');
+    const nextBtn = heroSlider.querySelector('[data-next]');
+    let currentSlide = 0;
+    let interval;
+
+    const showSlide = (index) => {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('opacity-25', i === index);
+        slide.classList.toggle('opacity-0', i !== index);
+      });
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('bg-white', i === index);
+        dot.classList.toggle('bg-white/40', i !== index);
+      });
+      currentSlide = index;
+    };
+
+    const nextSlide = () => {
+      showSlide((currentSlide + 1) % slides.length);
+    };
+
+    const prevSlide = () => {
+      showSlide((currentSlide - 1 + slides.length) % slides.length);
+    };
+
+    const startAutoPlay = () => {
+      const intervalMs = parseInt(heroSlider.dataset.intervalMs) || 5000;
+      interval = setInterval(nextSlide, intervalMs);
+    };
+
+    const stopAutoPlay = () => {
+      clearInterval(interval);
+    };
+
+    prevBtn?.addEventListener('click', () => {
+      prevSlide();
+      stopAutoPlay();
+      startAutoPlay();
+    });
+
+    nextBtn?.addEventListener('click', () => {
+      nextSlide();
+      stopAutoPlay();
+      startAutoPlay();
+    });
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => {
+        showSlide(i);
+        stopAutoPlay();
+        startAutoPlay();
+      });
+    });
+
+    showSlide(0);
+    startAutoPlay();
+  }
+
+  // Testimonial slider
+  const testimonialSlider = document.querySelector('[data-testimonial-slider]');
+  if (testimonialSlider) {
+    const slides = Array.from(testimonialSlider.querySelectorAll('[data-slide]'));
+    const dots = Array.from(testimonialSlider.querySelectorAll('[data-dot]'));
+    let currentSlide = 0;
+
+    const showSlide = (index) => {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('opacity-100', i === index);
+        slide.classList.toggle('opacity-0', i !== index);
+      });
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('bg-brandOrange', i === index);
+        dot.classList.toggle('bg-brandGray', i !== index);
+      });
+      currentSlide = index;
+    };
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => showSlide(i));
+    });
+
+    showSlide(0);
+  }
+}
+
+// Initialize smooth routing
+const router = new SmoothRouter();
+
 const lightboxModal = document.querySelector('[data-lightbox-modal]');
 if (lightboxModal) {
   const imgEl = lightboxModal.querySelector('[data-lightbox-image]');
@@ -78,191 +379,9 @@ if (lightboxModal) {
   });
 }
 
-const testimonialSlider = document.querySelector('[data-testimonials-slider]');
-if (testimonialSlider) {
-  const slides = Array.from(testimonialSlider.querySelectorAll('[data-t-slide]'));
-  const dots = Array.from(testimonialSlider.querySelectorAll('[data-t-dot]'));
-  const prevBtn = testimonialSlider.querySelector('[data-t-prev]');
-  const nextBtn = testimonialSlider.querySelector('[data-t-next]');
-  const intervalMs = Number(testimonialSlider.getAttribute('data-interval-ms') || '6500');
-  let idx = 0;
-  let timerId;
-
-  const setActive = (nextIdx) => {
-    if (!slides.length) return;
-    idx = (nextIdx + slides.length) % slides.length;
-
-    slides.forEach((el, i) => {
-      el.classList.toggle('hidden', i !== idx);
-    });
-
-    dots.forEach((el, i) => {
-      el.classList.toggle('bg-brandNavy', i === idx);
-      el.classList.toggle('bg-brandNavy/30', i !== idx);
-    });
-  };
-
-  const stop = () => {
-    if (timerId) window.clearInterval(timerId);
-    timerId = undefined;
-  };
-
-  const start = () => {
-    stop();
-    if (slides.length <= 1) return;
-    timerId = window.setInterval(() => setActive(idx + 1), intervalMs);
-  };
-
-  prevBtn?.addEventListener('click', () => {
-    setActive(idx - 1);
-    start();
-  });
-  nextBtn?.addEventListener('click', () => {
-    setActive(idx + 1);
-    start();
-  });
-
-  dots.forEach((d, i) =>
-    d.addEventListener('click', () => {
-      setActive(i);
-      start();
-    })
-  );
-
-  testimonialSlider.addEventListener('mouseenter', stop);
-  testimonialSlider.addEventListener('mouseleave', start);
-  testimonialSlider.addEventListener('focusin', stop);
-  testimonialSlider.addEventListener('focusout', start);
-
-  setActive(0);
-  start();
-}
-
-const slider = document.querySelector('[data-hero-slider]');
-if (slider) {
-  const slides = Array.from(slider.querySelectorAll('[data-slide]'));
-  const dots = Array.from(slider.querySelectorAll('[data-dot]'));
-  const prevBtn = slider.querySelector('[data-prev]');
-  const nextBtn = slider.querySelector('[data-next]');
-  const intervalMs = Number(slider.getAttribute('data-interval-ms') || '4500');
-  let idx = 0;
-  let timerId;
-
-  const setActive = (nextIdx) => {
-    idx = (nextIdx + slides.length) % slides.length;
-
-    slides.forEach((el, i) => {
-      el.classList.toggle('opacity-100', i === idx);
-      el.classList.toggle('opacity-0', i !== idx);
-    });
-
-    dots.forEach((el, i) => {
-      el.classList.toggle('bg-white', i === idx);
-      el.classList.toggle('bg-white/40', i !== idx);
-    });
-  };
-
-  const stop = () => {
-    if (timerId) window.clearInterval(timerId);
-    timerId = undefined;
-  };
-
-  const start = () => {
-    stop();
-    if (slides.length <= 1) return;
-    timerId = window.setInterval(() => setActive(idx + 1), intervalMs);
-  };
-
-  prevBtn?.addEventListener('click', () => {
-    setActive(idx - 1);
-    start();
-  });
-  nextBtn?.addEventListener('click', () => {
-    setActive(idx + 1);
-    start();
-  });
-
-  dots.forEach((d, i) =>
-    d.addEventListener('click', () => {
-      setActive(i);
-      start();
-    })
-  );
-
-  slider.addEventListener('mouseenter', stop);
-  slider.addEventListener('mouseleave', start);
-  slider.addEventListener('focusin', stop);
-  slider.addEventListener('focusout', start);
-
-  setActive(0);
-  start();
-}
-
-// Back to Top Button
-const backToTopBtn = document.getElementById('back-to-top');
-if (backToTopBtn) {
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 300) {
-      backToTopBtn.classList.remove('hidden');
-    } else {
-      backToTopBtn.classList.add('hidden');
-    }
-  });
-
-  backToTopBtn.addEventListener('click', () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  });
-}
-
-// Enhanced Form Submission with AJAX
-const contactForm = document.querySelector('form[action="send_quote.php"]');
-if (contactForm) {
-  contactForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const submitBtn = contactForm.querySelector('button[type="submit"]');
-    const originalText = submitBtn.textContent;
-    
-    // Show loading state
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<span class="spinner inline-block mr-2"></span>Sending...';
-    contactForm.classList.add('form-loading');
-    
-    const formData = new FormData(contactForm);
-    
-    try {
-      const response = await fetch('send_quote.php', {
-        method: 'POST',
-        body: formData
-      });
-      
-      const text = await response.text();
-      
-      if (response.ok) {
-        // Show success message
-        contactForm.innerHTML = `
-          <div class="success-message text-center p-8">
-            <svg class="mx-auto h-16 w-16 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-            </svg>
-            <h3 class="mt-4 text-xl font-semibold text-brandGreen">Thank you for your inquiry!</h3>
-            <p class="mt-2 text-black/70">We've received your request and will contact you within 24 hours.</p>
-            <a href="index.html" class="mt-6 inline-flex items-center justify-center rounded-md bg-brandOrange px-6 py-3 text-sm font-semibold text-white hover:brightness-95">
-              Back to Homepage
-            </a>
-          </div>
-        `;
-      } else {
-        throw new Error('Form submission failed');
-      }
-    } catch (error) {
-      alert('There was an error sending your request. Please call us directly at +91-9113311263 or email husnaengconst@outlook.com');
-      submitBtn.disabled = false;
-      submitBtn.textContent = originalText;
-      contactForm.classList.remove('form-loading');
-    }
-  });
-}
+// Initialize all components on page load
+document.addEventListener('DOMContentLoaded', () => {
+  initBackToTop();
+  initContactForm();
+  initSliders();
+});
