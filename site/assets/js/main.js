@@ -197,3 +197,82 @@ if (slider) {
   setActive(0);
   start();
 }
+
+// Back to Top Button
+const backToTopBtn = document.getElementById('back-to-top');
+if (backToTopBtn) {
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+      backToTopBtn.classList.remove('hidden');
+    } else {
+      backToTopBtn.classList.add('hidden');
+    }
+  });
+
+  backToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+}
+
+// Enhanced Form Submission with AJAX
+const contactForm = document.querySelector('form[action="send_quote.php"]');
+if (contactForm) {
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const submitBtn = contactForm.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    
+    // Show loading state
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="spinner inline-block mr-2"></span>Sending...';
+    contactForm.classList.add('form-loading');
+    
+    const formData = new FormData(contactForm);
+    
+    try {
+      const response = await fetch('send_quote.php', {
+        method: 'POST',
+        body: formData
+      });
+      
+      const text = await response.text();
+      
+      if (response.ok) {
+        // Show success message
+        contactForm.innerHTML = `
+          <div class="success-message text-center p-8">
+            <svg class="mx-auto h-16 w-16 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <h3 class="mt-4 text-xl font-semibold text-brandGreen">Thank you for your inquiry!</h3>
+            <p class="mt-2 text-black/70">We've received your request and will contact you within 24 hours.</p>
+            <a href="index.html" class="mt-6 inline-flex items-center justify-center rounded-md bg-brandOrange px-6 py-3 text-sm font-semibold text-white hover:brightness-95">
+              Back to Homepage
+            </a>
+          </div>
+        `;
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (error) {
+      alert('There was an error sending your request. Please call us directly at +91-9113311263 or email husnaengconst@outlook.com');
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
+      contactForm.classList.remove('form-loading');
+    }
+  });
+}
+
+// Page Load Animation
+window.addEventListener('load', () => {
+  const loader = document.getElementById('page-loader');
+  if (loader) {
+    setTimeout(() => {
+      loader.classList.add('hidden');
+    }, 300);
+  }
+});

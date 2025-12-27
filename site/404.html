@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page Not Found | Husna Engineering & Construction Pvt. Ltd.</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brandGreen: '#0B7D3B',
+              brandOrange: '#FF7A18',
+              brandNavy: '#163B5B',
+              brandSlate: '#111827',
+              brandGray: '#F3F4F6'
+            }
+          }
+        }
+      };
+    </script>
+  </head>
+  <body class="bg-white text-brandSlate antialiased">
+    <div class="flex min-h-screen flex-col items-center justify-center px-4">
+      <div class="text-center">
+        <div class="mb-8">
+          <img class="mx-auto h-20 w-auto" src="assets/logo.jpeg" alt="Husna Engineering logo" width="160" height="80" />
+        </div>
+        
+        <h1 class="text-8xl font-bold text-brandNavy">404</h1>
+        <h2 class="mt-4 text-2xl font-semibold text-brandSlate">Page Not Found</h2>
+        <p class="mt-3 text-black/70 max-w-md mx-auto">
+          The page you're looking for doesn't exist or has been moved.
+        </p>
+        
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+          <a 
+            class="inline-flex items-center justify-center rounded-md bg-brandOrange px-6 py-3 text-sm font-semibold text-white hover:brightness-95"
+            href="index.html"
+          >
+            Go to Homepage
+          </a>
+          <a 
+            class="inline-flex items-center justify-center rounded-md border border-black/10 bg-white px-6 py-3 text-sm font-semibold text-black/80 hover:bg-brandGray"
+            href="contact.html"
+          >
+            Contact Us
+          </a>
+        </div>
+        
+        <div class="mt-12">
+          <p class="text-sm text-black/60">Quick Links:</p>
+          <div class="mt-3 flex flex-wrap justify-center gap-4 text-sm">
+            <a class="text-brandNavy hover:underline" href="about.html">About</a>
+            <a class="text-brandNavy hover:underline" href="services.html">Services</a>
+            <a class="text-brandNavy hover:underline" href="projects.html">Projects</a>
+            <a class="text-brandNavy hover:underline" href="gallery.html">Gallery</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
