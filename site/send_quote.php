@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 // Update these for your GoDaddy hosting
 $toEmail = 'husnaeng&const@outlook.com';
-$subjectPrefix = 'New Quote Request';
+$subjectPrefix = 'New Quote/Enquiry Request';
 
 function respondHtml(int $statusCode, string $title, string $message): void {
   http_response_code($statusCode);
