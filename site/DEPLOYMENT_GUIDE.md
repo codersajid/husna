@@ -15,7 +15,7 @@ $toEmail = 'husnaengconst@outlook.com';
 ```
 
 **Note:** The email in your files had `&` instead of `@`. Make sure to use the correct format:
-- ❌ Wrong: `husnaeng&const@outlook.com`
+- ❌ Wrong: `info@husna.co.in`
 - ✅ Correct: `husnaengconst@outlook.com` (or your actual email)
 
 ---
