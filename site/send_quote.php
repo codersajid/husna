@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 // IMPORTANT: Update this email to your actual receiving email
-$toEmail = 'husnaengconst@outlook.com';
+$toEmail = 'info@husna.co.in';
 $subjectPrefix = 'New Quote Request - Husna Engineering';
 
 function respondHtml(int $statusCode, string $title, string $message): void {
@@ -60,12 +60,13 @@ $textBody = "New Quote Request\n\n" .
   "IP: {$ip}\n" .
   "User-Agent: {$ua}\n";
 
-$fromEmail = 'noreply@' . ($_SERVER['HTTP_HOST'] ?? 'husnaengineering.com');
+$fromEmail = 'info@husna.co.in';
 $headers = [];
 $headers[] = 'From: ' . $fromEmail;
 if ($email !== '') {
   $headers[] = 'Reply-To: ' . $email;
 }
+$headers[] = 'CC: azadsiddique058@gmail.com';
 $headers[] = 'MIME-Version: 1.0';
 
 // Optional attachment
